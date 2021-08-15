@@ -1,7 +1,7 @@
 
 def add_time(start_time, duration, start_day=False):
 
-    # WeekDays Lookup
+    # Days
     days_lst = ['Monday', 'Tuesday', 'Wednesday',
                 'Thursday', 'Friday', 'Saturday', 'Sunday']
     days_dict = {days_lst[n].lower(): n for n in range(len(days_lst))}
@@ -17,19 +17,18 @@ def add_time(start_time, duration, start_day=False):
     duration_split_lst = duration.split(":")
     hours_duration = int(duration_split_lst[0])
     minutes_duration = int(duration_split_lst[1])
-    # Pasar star_time a 24hs format minutes_duration = duration_split(duration)
 
     if abb_start_time == 'PM':
         hours_start_time = hours_start_time+12
 
-    # Sumar minutos
+    # Sumary minutes
     minutes_end_time = minutes_start_time + minutes_duration
 
-    # Sumar horas
+    # Sumary huors
     hours_end_time = hours_start_time + \
         hours_duration + int(minutes_end_time / 60)
 
-    # Calcular cuantas veces pasamos la hora 24
+    # count the number of times past 24 hours
     hours_forward = hours_end_time % 24
     days_forward = int(hours_end_time / 24)
     minutes_forward = minutes_end_time % 60
@@ -37,14 +36,14 @@ def add_time(start_time, duration, start_day=False):
     if minutes_forward < 10:
         minutes_forward = '0' + str(minutes_forward)
 
-    # Si vino el parametro r estart_day, calculand_day
+    # determine the day
     weekDayNum_end = -1
     if start_day is not False:
         weekDayNum_start = days_dict[start_day.lower()]
         weekDayNum_end = (weekDayNum_start+days_forward) % 7
         weekDayName = days_lst[weekDayNum_end]
 
-    # Pasar a formato AM/PM
+    # format PM/AM
     if hours_forward > 12 and hours_forward < 24:
         hours_forward = hours_forward-12
         abb_end_time = 'PM'
